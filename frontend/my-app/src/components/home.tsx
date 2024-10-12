@@ -3,6 +3,6 @@ import React from 'react';
 
 export default function Home() {
     return(
-        <p>egg</p>
+        <p>This is the feed.</p>
     )
 }
