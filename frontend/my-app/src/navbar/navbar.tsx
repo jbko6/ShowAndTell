@@ -15,7 +15,7 @@ const Navbar = () => {
             <li>Pricing</li>
           </ul>
         </div>
-
+        
         <div className='flex'>
           <button className=''>Login</button>
           <button className='px-8 py-3 rounded-md bg-[#20B486]'>Sign Up</button>
