@@ -18,8 +18,9 @@ public class Group {
     @Setter(AccessLevel.NONE)
     private ObjectId id;
 
-    private ObjectId category;
-    private List<User> members;
+    private String category_name;
+    private List<ObjectId> member;
+    private List<Post> posts;
 
 
 }
