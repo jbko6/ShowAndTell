@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dubhacks24.showandtell.model.Comment;
 import com.dubhacks24.showandtell.model.Group;
+import com.dubhacks24.showandtell.model.Post;
 import com.dubhacks24.showandtell.repository.GroupRepository;
 import com.dubhacks24.showandtell.repository.UserRepository;
 
@@ -40,22 +42,46 @@ public class GroupController {
 
     @GetMapping("/groups")
     Iterable<Group> Groups(Principal principal) {
-        return groupRepo.findAllByMemberId(principal.getName());
+        return groupRepo.findAllByMember(new ObjectId(principal.getName()));
     }
 
     @GetMapping("/groups/{id}")
-    ResponseEntity<?> getGroup(@PathVariable("id") String id) {
-        Optional<Group> Group = groupRepo.findById(id);
-        return Group.map(response -> ResponseEntity.ok().body(response))
+    ResponseEntity<?> getGroup(@PathVariable ObjectId id) {
+        Optional<Group> group = groupRepo.findById(id);
+        return group.map(response -> ResponseEntity.ok().body(response))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PostMapping("/groups/{id}/posts")
+    ResponseEntity<?> submitPost(@PathVariable ObjectId id, @Valid @RequestBody Post post) throws URISyntaxException {
+        Optional<Group> group = groupRepo.findById(id);
+        if (group.isPresent()) {
+            Group realGroup = group.get();
+            realGroup.getPosts().add(post);
+            Group result = groupRepo.save(realGroup);
+            return ResponseEntity.created(new URI("/api/group/" + result.getId())).body(result);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/groups/{id}/posts/{index}/comments")
+    ResponseEntity<?> submitComment(@PathVariable ObjectId id, @PathVariable int index, @Valid @RequestBody Comment comment) throws URISyntaxException {
+        Optional<Group> group = groupRepo.findById(id);
+        if (group.isPresent()) {
+            Group realGroup = group.get();
+            realGroup.getPosts().get(index).getComments().add(comment);
+            Group result = groupRepo.save(realGroup);
+            return ResponseEntity.created(new URI("/api/group/" + result.getId())).body(result);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("/groups")
-    ResponseEntity<Group> createGroup(@Valid @RequestBody Group Group) throws URISyntaxException {
-        log.info("Request to create Group: {}", Group);
-        Group result = groupRepo.save(Group);
+    ResponseEntity<Group> createGroup(@Valid @RequestBody Group group) throws URISyntaxException {
+        log.info("Request to create Group: {}", group);
+        Group result = groupRepo.save(group);
         
-        return ResponseEntity.created(new URI("/api/Group/" + result.getId())).body(result);
+        return ResponseEntity.created(new URI("/api/group/" + result.getId())).body(result);
     }
 
     @PutMapping("/groups/{id}")
