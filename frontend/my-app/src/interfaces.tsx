@@ -35,3 +35,9 @@ export type CommentData = {
     author: string
     content: string
 }
+
+export type Category = {
+    title: string
+    description: string
+    groups: Array<ObjectId>
+}

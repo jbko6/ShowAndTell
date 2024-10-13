@@ -6,6 +6,9 @@ import Group from './group';
 import Landingpage from './landingpage';
 import About from './about';
 import Postinginfo from './postinginfo';
+import Welcome from './welcome';
+import AddGroups from './addgroups';
+import Choose from './choose';
 
 const Main = () => {
     return(
@@ -16,6 +19,9 @@ const Main = () => {
                 <Route path='/landingpage' element={<Landingpage/>}></Route>
                 <Route path='/about' element={<About/>}></Route>
                 <Route path='/postinginfo' element={<Postinginfo/>}></Route>
+                <Route path='/welcome' element={<Welcome/>}></Route>
+                <Route path='/addgroups' element={<AddGroups/>}></Route>
+                <Route path='/choose' element={<Choose/>}></Route>
             </Routes>
         </Router>
     );
