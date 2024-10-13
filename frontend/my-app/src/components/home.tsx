@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { UserData, GroupData } from '../interfaces'
 import { GroupList } from './GroupList';
-import { PostList } from './PostList';
+import PostList from './PostList';
 import Navbar from '../landing/navbar';
 
 export default function Home() {
@@ -84,7 +84,7 @@ export default function Home() {
                 <div className="w-full justify-center">
 
                     {/* Displays posts from all groups */}
-                    <PostList groupList={group} />
+                    {group ? <PostList groupData={group} /> : <></>}
                 </div>
 
                 {/* Right Column */}

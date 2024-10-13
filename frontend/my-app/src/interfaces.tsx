@@ -21,6 +21,13 @@ export type PostData = {
     markdown: string
     author: string
     comments: Array<CommentData>
+    parentCategoryName?: String | undefined
+}
+
+export type CategoryData  = {
+    id: ObjectId
+    title: String
+    description: String
 }
 
 export type CommentData = {

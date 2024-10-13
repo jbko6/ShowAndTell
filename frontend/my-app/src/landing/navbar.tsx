@@ -34,12 +34,12 @@ const Navbar = () => {
         </div>
 
         <div className='flex justify-end ml-1'>
-          <button className='hover:brightness-90 duration-500 px-6 gap-2 flex justify-between items-center rounded-md bg-transparent'>
+          <a className='hover:brightness-90 duration-500 px-6 gap-2 flex justify-between items-center rounded-md bg-transparent' href="/">
             Login
-          </button>
-          <button className='hover:brightness-90 duration-500 px-8 py-3 rounded-md bg-satGreen text-white font-bold'>
+          </a>
+          <a className='hover:brightness-90 duration-500 px-8 py-3 rounded-md bg-satGreen text-white font-bold' href="/">
             Sign Up
-          </button>
+          </a>
         </div>
 
       </div>

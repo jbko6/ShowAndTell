@@ -1,45 +1,33 @@
-import React, { Component } from "react";
-import { GroupData, PostData } from "../interfaces";
+import { useEffect, useState } from "react";
+import { CategoryData, GroupData } from "../interfaces";
 import { Post } from "./post";
 
-type PostListProps = {
+const PostList = ({groupData} : {groupData : Array<GroupData>}) => {
+    const [categories, setCategories] = useState<CategoryData|null>(null);
 
-    groupList: Array<GroupData> | null;
+    useEffect(() => {
+        fetch('/api/categories', {credentials: 'include'})
+            .then(res => res.json())
+            .then(response => {
+                setCategories(response);
 
+                groupData.forEach(group => {
+                    group.posts.forEach(post => {
+                        post.parentCategoryName = group.categoryName;
+                    })
+                })
+            })
+    })
+
+    return (
+        <>
+            {groupData.map(group => {
+                return group.posts.map(post => {
+                    return <Post id={post.id} title={post.title} markdown={post.markdown} author={post.author} comments={post.comments} parentCategoryName={post.parentCategoryName ? post.parentCategoryName : ""} />;
+                })
+            })}
+        </>
+    )
 }
 
-type PostListState = {
-
-}
-
-export class PostList extends Component<PostListProps, PostListState> {
-
-    constructor(props: PostListProps) {
-        super(props);
-        this.state = {};
-    }
-
-    render = (): JSX.Element => {
-        const postListHTML: JSX.Element[] = [];
-
-        if (this.props.groupList == null) {
-            postListHTML.push(
-                <div>NO GROUPS!</div>
-            );
-            return (<div>{postListHTML}</div>);
-        }
-
-        for (const group of this.props.groupList) {
-            if (group.posts != null) {
-                for (const post of group.posts) {
-                    postListHTML.push(
-                        <Post id={post.id} title={post.title} markdown={post.markdown} author={post.author} comments={post.comments} />
-                    );
-                }
-            };
-                
-        }
-
-        return (<div>{postListHTML}</div>)
-    }
-}
+export default PostList

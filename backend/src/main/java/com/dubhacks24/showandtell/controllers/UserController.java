@@ -48,8 +48,7 @@ public class UserController {
                 User newUser = new User(user.getName(), (String) attributes.get("name"), (String) attributes.get("email"));
                 userRepo.save(newUser);
             }
-            User foundUser = userRepo.findById(user.getName()).get();
-            return ResponseEntity.ok().body(Map.of("_id", foundUser.getId(), "name", foundUser.getName(), "email", foundUser.getEmail()));
+            return ResponseEntity.ok().body(user.getAttributes());
         }
     }
 

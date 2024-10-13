@@ -1,6 +1,8 @@
-import { PostData } from '../interfaces'
-import { ObjectId } from 'bson'
+import { ObjectId } from 'bson';
+import Markdown from 'react-markdown';
+import { PostData } from '../interfaces';
 import { CommentList } from './CommentList';
+import { useEffect, useState } from 'react';
 
 const countComments = (postData: PostData): number => {
     let count: number = 0;
@@ -11,19 +13,32 @@ const countComments = (postData: PostData): number => {
     return count;
 };
 
+const colorOptions = [
+    "text-satGreen",
+    "text-satBlue",
+    "text-satRed"
+]
+
 export const Post = (postData : PostData) => {
+    const [categoryColor, setCategoryColor] = useState<string>("");
+
+    useEffect(() => {
+        setCategoryColor(colorOptions[Math.floor(Math.random() * colorOptions.length)])
+    }, [setCategoryColor])
+
     return <>
         <label htmlFor='postModal' className='cursor-pointer'>
             <div className="w-auto bg-white rounded-[0.5rem] mx-2 my-4 px-3 pt-2 pb-3 h-fit outline-2 outline-satBlue outline">
                 <div className='flex justify-between'>
                     <p className='font-productsans font-bold'>{postData.title}</p>
-                    <p className='text-xs text-gray-400'>{new ObjectId(postData.id).getTimestamp().toString()}</p>
+                    <p className={'font-productsans italic font-bold text-s ' + categoryColor}>{postData.parentCategoryName ? postData.parentCategoryName : ""}</p>
+                    <p className='text-xs text-gray-400'>{new ObjectId(postData.id).getTimestamp().toString().substring(0, 15)}</p>
                 </div>
-                <div className='flex w-full text-sm -mt-2 text-gray-400'>
+                <div className='flex w-full text-sm -mt-2 text-gray-400 py-1'>
                     <p>{postData.author}</p>
                 </div>
-                <div className='mt-1 flex w-full leading-tight text-sm'>
-                    <p>{postData.markdown}</p>
+                <div className='mt-1 flex w-full leading-tight text-sm pb-3 leading-10'>
+                    <Markdown>{postData.markdown}</Markdown>
                 </div>
                 <div className='flex justify-between items-center'>
                     <div className='flex items-center'>
