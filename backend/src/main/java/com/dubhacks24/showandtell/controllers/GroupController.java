@@ -3,6 +3,9 @@ package com.dubhacks24.showandtell.controllers;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -51,12 +54,33 @@ public class GroupController {
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/groups/{id}/join")
-    ResponseEntity<?> joinGroup(@PathVariable("id") String id, Principal pricipal) throws URISyntaxException {
+    @GetMapping("/groups/{id}/myday")
+    ResponseEntity<?> getMyDay(@PathVariable("id") String id, Principal principal) {
         Optional<Group> optionalGroup = groupRepo.findById(id);
         if (optionalGroup.isPresent()) {
             Group realGroup = optionalGroup.get();
-            realGroup.getMember().add(pricipal.getName());
+            Map<String, Date> postingDays = realGroup.getPostDays();
+            if (postingDays.containsKey(principal.getName())) {
+                return ResponseEntity.ok().body(postingDays.get(principal.getName()));
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/groups/{id}/join")
+    ResponseEntity<?> joinGroup(@PathVariable("id") String id, Principal principal) throws URISyntaxException {
+        Optional<Group> optionalGroup = groupRepo.findById(id);
+        if (optionalGroup.isPresent()) {
+            Group realGroup = optionalGroup.get();
+
+            realGroup.getMember().add(principal.getName());
+
+            // set posting day
+            if (realGroup.getPostDays() == null) {
+                realGroup.setPostDays(new HashMap<String, Date>());
+            }
+            realGroup.getPostDays().put(principal.getName(), new Date(124, 10, 15));
+
             Group result = groupRepo.save(realGroup);
             return ResponseEntity.created(new URI("/api/groups/" + result.getId())).body(result);
         }
