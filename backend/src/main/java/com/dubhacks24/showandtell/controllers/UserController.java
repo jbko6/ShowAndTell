@@ -50,7 +50,7 @@ public class UserController {
                 userRepo.save(newUser);
             }
             User currentUser = userRepo.findById(user.getName()).get();
-            return ResponseEntity.ok().body(user.getAttributes());
+            return ResponseEntity.ok().body(currentUser);
         }
     }
 

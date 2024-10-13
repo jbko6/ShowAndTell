@@ -2,6 +2,7 @@ package com.dubhacks24.showandtell.model;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -23,7 +24,7 @@ public class User {
     private String email;
     private String picture;
     private String nickname;
-    private List<Group> groups;
+    private List<ObjectId> groups;
 
     public User(String sub, String name, String email, String picture, String nickname) {
         this.sub = sub;

@@ -1,5 +1,8 @@
 import React from 'react'
 import T_Block from '../img/T_Block.png';
+import P_Ex from '../img/post.png';
+import P_Ex2 from '../img/post2.png';
+import Join from '../img/join.png';
 
 const Examples = () => {
   return (
@@ -11,13 +14,13 @@ const Examples = () => {
             <div className='drop-shadow-md overflow-hidden max-w-[1280px] w-full m-auto
                             grid justify-center gap-8 grid-cols-3 grid-rows-1'>
                 <div> 
-                    <img src={T_Block} className='bg-white rounded-2xl object-cover'/>
+                    <img src={P_Ex} className='bg-white rounded-[0.5rem] object-cover'/>
                 </div>
                 <div>
-                    <img src={T_Block} className='bg-white rounded-2xl object-cover'/>
+                    <img src={P_Ex2} className='bg-white rounded-[0.5rem] object-cover'/>
                 </div>
                 <div>
-                    <img src={T_Block} className='bg-white rounded-2xl object-cover'/>
+                    <img src={Join} className='bg-white rounded-[0.5rem] object-cover'/>
                 </div>
             </div>
 

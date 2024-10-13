@@ -6,7 +6,7 @@ export type UserData = {
     nickname: string
     email: string
     picture: string
-    groups: GroupData[]
+    groups: String[]
 }
 
 export type GroupData = {
