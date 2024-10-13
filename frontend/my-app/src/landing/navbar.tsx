@@ -33,7 +33,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div className='flex'>
+        <div className='flex justify-end ml-1'>
           <button className='hover:brightness-90 duration-500 px-6 gap-2 flex justify-between items-center rounded-md bg-transparent'>
             Login
           </button>
