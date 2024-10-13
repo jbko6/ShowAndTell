@@ -1,4 +1,4 @@
-import {ObjectId} from 'bson';
+import { ObjectId } from "bson";
 
 export type User = {
     sub: string
@@ -6,4 +6,18 @@ export type User = {
     nickname: string
     email: string
     picture: string
+}
+
+export type Group = {
+    id: ObjectId
+    categoryName: string
+    member: Array<ObjectId>
+    posts: Array<Post>
+}
+
+export type Post = {
+    id: ObjectId
+    markdown: string
+    author: ObjectId
+    comments: Array<Comment>
 }

@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import tmpImg from '../img/beans.jpg';
-import { User } from '../interfaces'
+import { User, Group, Post } from '../interfaces'
 // import './App.css';
+import { GroupList } from './GroupList';
 
 export default function Home() {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<User|null>(null);
     const [cookies] = useCookies(['XSRF-TOKEN']);
+    const [group, setGroup] = useState<Array<Group>|null>(null);
 
     useEffect(() => {
         setLoading(true);
@@ -30,7 +32,21 @@ export default function Home() {
                     setLoading(false);
                 }
             });
-    }, [setAuthenticated, setLoading, setUser]);
+
+        setLoading(true);
+        fetch('/api/groups')
+            .then(response => response.text())
+            .then(body => {
+                if (body == '') {
+                    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                } else {
+                    console.log(JSON.parse(body));
+                    setGroup(JSON.parse(body));
+                    setLoading(false);
+                }
+
+            });
+    }, [setAuthenticated, setLoading, setUser, setGroup]);
 
     const logout = () => {
         fetch('/api/logout', {
@@ -174,12 +190,12 @@ export default function Home() {
                     <a href='/404'>
                         <div className='bg-white items-center h-fit flex'>
                             <div className='w-fit mr-2 self-start'>
-                                {user ? <div><img src={user.picture}/></div> :
+                                {user ? <div><img className='rounded-[2rem] h-11 w-11' src={user.picture}/></div> :
                                 <svg className='text-gray-500' xmlns="http://www.w3.org/2000/svg" width='42' height='42' viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/><circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/>
                                 </svg>}
                             </div>
-                            <div className=''>
+                            <div className='mb-1.5'>
                                 <p className='text-xl'>{user ? user.name : ""}</p>
                             </div>
                         </div>
@@ -191,7 +207,7 @@ export default function Home() {
                     <label> + Add Groups</label>
                 </div>
 
-                <div className='flex justify-start ml-[8rem] mr-[2rem] mb-[1rem]'>
+                {/* <div className='flex justify-start ml-[8rem] mr-[2rem] mb-[1rem]'>
                     <a href='/group'>
                         <div className='bg-white items-center h-fit flex'>
                             <div className='w-fit mr-2 self-start'>
@@ -218,7 +234,8 @@ export default function Home() {
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> */}
+                <GroupList groupList={group} />
             </div>
         </div>
     )
