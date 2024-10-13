@@ -27,12 +27,14 @@ export const Post = (postData : PostData) => {
     }, [setCategoryColor])
 
     return <>
-        <label htmlFor='postModal' className='cursor-pointer'>
+        <input type='checkbox' id={postData.title + " Modal"} className={'fixed appearance-none opacity-0 peer'} />
+
+        <label htmlFor={postData.title + " Modal"} className='cursor-pointer'>
             <div className="w-auto bg-white rounded-[0.5rem] mx-2 my-4 px-3 pt-2 pb-3 h-fit outline-2 outline-satBlue outline">
                 <div className='flex justify-between'>
                     <p className='font-productsans font-bold'>{postData.title}</p>
                     <p className={'font-productsans italic font-bold text-s ' + categoryColor}>{postData.parentCategoryName ? postData.parentCategoryName : ""}</p>
-                    <p className='text-xs text-gray-400'>{new ObjectId(postData.id).getTimestamp().toString().substring(0, 15)}</p>
+                    <p className='text-xs text-gray-400'>{postData.timestamp ? postData.timestamp.toString().substring(0, 15) : ""}</p>
                 </div>
                 <div className='flex w-full text-sm -mt-2 text-gray-400 py-1'>
                     <p>{postData.author}</p>
@@ -57,27 +59,26 @@ export const Post = (postData : PostData) => {
             </div>
         </label>
 
-        <input type='checkbox' id='postModal' className='peer fixed appearance-none opacity-0' />
-
+        {postData.title === "Sample Post" ? <>
         {/* The post in ISOLATED view */}
-        <label htmlFor='postModal' className='
-            pointer-events-none invisible fixed inset-0 flex cursor-pointer items-start justify-center overflow-hidden backdrop-blur-md bg-opacity-20 bg-white 
-            overscroll-contain opacity-0 transition-all duration-300 ease-in-out 
-            peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100'>
-            <label className='outline outline-satGreen max-h-lg bg-white h-fit max-w-lg w-1/2 mx-2 my-[12rem] px-3 pt-2 pb-3 rounded-[1rem]' htmlFor=''>
+        <label htmlFor={postData.title + " Modal"} className={'\
+            pointer-events-none invisible fixed inset-0 flex cursor-pointer items-start justify-center overflow-hidden backdrop-blur-md bg-opacity-20 bg-white \
+            overscroll-contain opacity-0 transition-all duration-300 ease-in-out \
+            peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100'}>
+            <div className='outline outline-satGreen max-h-lg bg-white h-fit max-w-lg w-1/2 mx-2 my-[12rem] px-3 pt-2 pb-3 rounded-[1rem]'>
                     <div className='flex justify-between'>
                         <p className='font-productsans font-bold'>{postData.title}</p>
-                        <p className='text-xs text-gray-400'>{new ObjectId(postData.id).getTimestamp().toString()}</p>
+                        <p className='text-xs text-gray-400'>{postData.timestamp ? postData.timestamp.toString().substring(0, 15) : ""}</p>
                     </div>
                     <div className='flex w-full text-sm -mt-2 text-gray-400'>
                         <p>{postData.author}</p>
                     </div>
                     {/* <img src={tmpImg} className="my-2 rounded-[1rem]" alt=""></img> */}
                     <div className='mt-1 flex w-full leading-tight text-sm'>
-                        <p>{postData.markdown}</p>
+                        <Markdown>{postData.markdown}</Markdown>
                     </div>
-            </label>
-            <label className='outline outline-satBlue max-h-lg bg-white h-fit max-w-lg w-1/2 mx-2 my-[12rem] px-3 py-2 rounded-[1rem]' htmlFor=''>
+            </div>
+            <div className='outline outline-satBlue max-h-lg bg-white h-fit max-w-lg w-1/2 mx-2 my-[12rem] px-3 py-2 rounded-[1rem]'>
                     <div className='flex justify-between mb-1'>
                         <p className='font-bold text-lg'>Comments</p>
                         <div className='flex items-center'>
@@ -89,11 +90,11 @@ export const Post = (postData : PostData) => {
                     </div>
                     <hr className="h-0.5 my-1 bg-gray-300 border-0 dark:bg-gray-700 mb-3"></hr>
                     {/* POST COMMENTS */}
-                    <div>
+                    <div id="comment-list">
                         <CommentList commentList={postData.comments} />
                     </div>
-            </label>
-        </label>
+            </div>
+        </label></> : <></>}
     </>
 };
 

@@ -6,6 +6,7 @@ export type UserData = {
     nickname: string
     email: string
     picture: string
+    groups: GroupData[]
 }
 
 export type GroupData = {
@@ -16,7 +17,7 @@ export type GroupData = {
 }
 
 export type PostData = {
-    id: ObjectId
+    timestamp: Date
     title: string
     markdown: string
     author: string
@@ -25,19 +26,13 @@ export type PostData = {
 }
 
 export type CategoryData  = {
-    id: ObjectId
     title: String
     description: String
+    groups: Array<ObjectId>
 }
 
 export type CommentData = {
-    id: ObjectId
+    timestamp: Date
     author: string
     content: string
-}
-
-export type Category = {
-    title: string
-    description: string
-    groups: Array<ObjectId>
 }

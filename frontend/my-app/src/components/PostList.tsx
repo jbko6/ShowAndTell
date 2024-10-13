@@ -17,13 +17,13 @@ const PostList = ({groupData} : {groupData : Array<GroupData>}) => {
                     })
                 })
             })
-    })
+    }, [])
 
     return (
         <>
             {groupData.map(group => {
                 return group.posts.map(post => {
-                    return <Post id={post.id} title={post.title} markdown={post.markdown} author={post.author} comments={post.comments} parentCategoryName={post.parentCategoryName ? post.parentCategoryName : ""} />;
+                    return <Post timestamp={post.timestamp} title={post.title} markdown={post.markdown} author={post.author} comments={post.comments} parentCategoryName={post.parentCategoryName ? post.parentCategoryName : ""} />;
                 })
             })}
         </>

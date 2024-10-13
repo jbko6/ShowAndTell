@@ -6,7 +6,6 @@ import PostList from './PostList';
 import Navbar from '../landing/navbar';
 
 export default function Home() {
-    const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<UserData|null>(null);
     const [cookies] = useCookies(['XSRF-TOKEN']);
@@ -18,7 +17,6 @@ export default function Home() {
             .then(response => response.text())
             .then(body => {
                 if (body == '') {
-                    setAuthenticated(false);
                     let port = (window.location.port ? ':' + window.location.port : '');
                     if (port === ':3000') {
                         port = ':8080';
@@ -28,7 +26,10 @@ export default function Home() {
                 } else {
                     console.log(body)
                     setUser(JSON.parse(body));
-                    setAuthenticated(true);
+                    let curUser = JSON.parse(body);
+                    if (curUser!.groups == null) {
+                        window.location.href = `${window.location.origin}/welcome`
+                    }
                     setLoading(false);
                 }
             });
@@ -46,16 +47,16 @@ export default function Home() {
                 }
 
             });
-    }, [setAuthenticated, setLoading, setUser, setGroup]);
+    }, [setLoading, setUser, setGroup]);
 
     const logout = () => {
-        fetch('/api/logout', {
-            method: 'POST', credentials: 'include',
-            headers: { 'X-XSRF-TOKEN': cookies['XSRF-TOKEN'] }
+        fetch('http://localhost:8080/api/logout', {
+            method: 'POST', credentials: 'include', 
+            headers: { 'X-XSRF-TOKEN': cookies['XSRF-TOKEN']}//, 'Access-Control-Allow-Origin': 'http://localhost:8080/api/logout' , 'Access-Control-Allow-Headers': 'Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization', 'Access-Control-Allow-Methods': 'POST, PUT, PATCH, GET, DELETE, OPTIONS'}
         })
             .then(res => res.json())
             .then(response => {
-            window.location.href = `${response.logoutUrl}?id_token_hint=${response.idToken}`
+            window.location.href = `${response.logoutUrl}`
                 + `&post_logout_redirect_uri=${window.location.origin}`;
             });
     }
@@ -66,7 +67,7 @@ export default function Home() {
 
     return(
         <div>
-            <Navbar />
+            <Navbar showJoin={false} showLogout={true} logout={logout} />
             <div className="h-screen w-screen grid grid-cols-3 grid-rows-1 gap-3 justify-items-center">
                 {/* Left Column */}
                 <div className="w-full">

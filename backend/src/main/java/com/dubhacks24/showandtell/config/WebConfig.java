@@ -18,6 +18,18 @@ public class WebConfig implements WebMvcConfigurer {
             .allowedHeaders("*")
             .exposedHeaders("*")
             .allowCredentials(true).maxAge(3600);
+        registry.addMapping("/oauth2/authorization/okta")
+            .allowedOrigins("http://localhost:3000", "http://10.18.244.97:3000", "http://localhost:8080")
+            .allowedMethods("*")
+            .allowedHeaders("*")
+            .exposedHeaders("*")
+            .allowCredentials(true).maxAge(3600);
+        registry.addMapping("https://dev-lnmlyqkb2q6i4hgy.us.auth0.com/**")
+            .allowedOrigins("http://localhost:3000", "http://10.18.244.97:3000", "http://localhost:8080")
+            .allowedMethods("*")
+            .allowedHeaders("*")
+            .exposedHeaders("*")
+            .allowCredentials(true).maxAge(3600);
     }
 
 }

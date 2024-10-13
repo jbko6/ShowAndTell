@@ -16,7 +16,17 @@ export default function Welcome() {
                         <div className='flex my-1 rounded-[1rem] bg-satBlue text-white px-3 py-5 w-full h-fit'>
                             <div className='flex justify-between w-full'>
                                 <p className='text-1xl font-bold'>
-                                    EEEEEEEEEEEEEEEEEEEE
+                                    Welcome to <span className='text-gray-300'>Show & Tell</span>! We're a website dedicated towards giving people a place to share and be 
+                                    inspired by projects of all kinds.
+                                    <br></br>
+                                    <br></br>
+                                    Have you ever had a project you wanted to share? Tired of your posts getting lost in the aether of the internet? Well, look no further! We connect people to a group of 50 others who share your hobbies. From art and writing, to coding and cooking, you can contribute to it all. You can even get into the nitty gritty of it, categories such as art giving you spaces specific to oil painting or pen and ink if you so choose.
+                                    <br></br>
+                                    <br></br>
+                                    Share your progress on your projects every ten days, you and four others taking up the spotlight for the day. Never again will your works be lost to the masses.
+                                    <br></br>
+                                    <br></br>
+                                    Challenge yourself! Make progress on your works! Get inspiration!
                                 </p>
                             </div>
                         </div>

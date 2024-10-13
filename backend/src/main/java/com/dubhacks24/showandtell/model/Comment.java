@@ -1,24 +1,18 @@
 package com.dubhacks24.showandtell.model;
 
+import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class Comment {
-    
-    @Id
-    @Setter(AccessLevel.NONE)
-    private String id;
 
+    private Date timestamp;
     private String content;
     private String author;
     private int kudos;

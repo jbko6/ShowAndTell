@@ -14,9 +14,9 @@ const Main = () => {
     return(
         <Router>
             <Routes>
-                <Route path='/' element={<Home/>}></Route>
+                <Route path='/' element={<Landingpage/>}></Route>
                 <Route path='/group' element={<Group/>}></Route>
-                <Route path='/landingpage' element={<Landingpage/>}></Route>
+                <Route path='/feed' element={<Home/>}></Route>
                 <Route path='/about' element={<About/>}></Route>
                 <Route path='/postinginfo' element={<Postinginfo/>}></Route>
                 <Route path='/welcome' element={<Welcome/>}></Route>

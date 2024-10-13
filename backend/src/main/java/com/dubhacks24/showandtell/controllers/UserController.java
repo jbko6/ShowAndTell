@@ -12,13 +12,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dubhacks24.showandtell.repository.UserRepository;
 import com.dubhacks24.showandtell.model.User;
+import com.dubhacks24.showandtell.repository.UserRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -45,9 +46,10 @@ public class UserController {
         } else {
             if (userRepo.findById(user.getName()).isEmpty()) {
                 Map<String, Object> attributes = user.getAttributes();
-                User newUser = new User(user.getName(), (String) attributes.get("name"), (String) attributes.get("email"));
+                User newUser = new User(user.getName(), (String) attributes.get("name"), (String) attributes.get("email"), (String) attributes.get("picture"), (String) attributes.get("nickname"));
                 userRepo.save(newUser);
             }
+            User currentUser = userRepo.findById(user.getName()).get();
             return ResponseEntity.ok().body(user.getAttributes());
         }
     }
