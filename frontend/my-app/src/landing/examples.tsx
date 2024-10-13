@@ -4,7 +4,7 @@ import T_Block from '../img/T_Block.png';
 const Examples = () => {
   return (
     <div className='bg-[#bfd7eb63] py-24 m-auto'>
-            <div className='text-center text-2xl font-semibold text-[#9c1229] pb-20'>
+            <div className='text-center text-2xl font-semibold text-[#9c1229] pb-20 -mt-7'>
                 Share your progress and find inspiration
             </div>
 

@@ -2,6 +2,7 @@ import { Component } from "react";
 import { PostData } from '../interfaces'
 import { ObjectId } from 'bson'
 import { CommentList } from './CommentList';
+import cat from "../img/cat.jpg";
 
 const countComments = (postData: PostData): number => {
     let count: number = 0;
@@ -39,10 +40,13 @@ export class Post extends Component<PostProps, PostState> {
                         <p className='font-productsans font-bold'>{this.props.postData.title}</p>
                         <p className='text-xs text-gray-400'>{new ObjectId(this.props.postData.id).getTimestamp().toString()}</p>
                     </div>
-                    <div className='flex w-full text-sm -mt-2 text-gray-400'>
+                    <div className='flex w-full text-xs -mt-1 text-gray-400'>
                         <p>{this.props.postData.author}</p>
                     </div>
-                    <div className='mt-1 flex w-full leading-tight text-sm'>
+                    <div>
+                        <img className='rounded-[1rem] mt-2' src={cat}></img>
+                    </div>
+                    <div className='mt-1 mb-1 flex w-full leading-tight text-sm'>
                         <p>{this.props.postData.markdown}</p>
                     </div>
                     <div className='flex justify-between items-center'>
@@ -50,7 +54,7 @@ export class Post extends Component<PostProps, PostState> {
                             <svg className='text-yellow-500' xmlns="http://www.w3.org/2000/svg" width='20' height='20' viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/>
                                 <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
                             </svg>
-                            <p className='ml-2 text-xs font-bold '>14</p>
+                            <p className='ml-2 mt-0.5 text-xs font-bold '>{Math.floor(Math.random() * 10) + 5}</p>
                         </div>
                         <div className='flex items-center'>
                             <p className='mr-2 text-xs font-bold '>{countComments(this.props.postData)}</p>
@@ -62,22 +66,25 @@ export class Post extends Component<PostProps, PostState> {
                 </div>
             </label>
 
-            <input type='checkbox' id={this.props.postData.title + ""} className='peer fixed appearance-none opacity-0' />
+            <input type='checkbox' id={this.props.postData.title + ""} className='is-dirty peer fixed appearance-none opacity-0' />
 
             {/* The post in ISOLATED view */}
             <label htmlFor={this.props.postData.title + ""} className='
                 pointer-events-none invisible fixed inset-0 flex cursor-pointer items-start justify-center overflow-hidden backdrop-blur-md bg-opacity-20 bg-white 
                 overscroll-contain opacity-0 transition-all duration-300 ease-in-out 
-                peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100'>
+                peer-[.is-dirty]:peer-checked:pointer-events-auto peer-[.is-dirty]:peer-checked:visible peer-[.is-dirty]:peer-checked:opacity-100'>
                 <label className='outline outline-satGreen max-h-lg bg-white h-fit max-w-lg w-1/2 mx-2 my-[12rem] px-3 pt-2 pb-3 rounded-[1rem]' htmlFor=''>
                         <div className='flex justify-between'>
                             <p className='font-productsans font-bold'>{this.props.postData.title}</p>
                             <p className='text-xs text-gray-400'>{new ObjectId(this.props.postData.id).getTimestamp().toString()}</p>
                         </div>
-                        <div className='flex w-full text-sm -mt-2 text-gray-400'>
+                        <div className='flex w-full text-xs -mt-1 text-gray-400'>
                             <p>{this.props.postData.author}</p>
                         </div>
-                        <div className='mt-1 flex w-full leading-tight text-sm'>
+                        <div>
+                            <img className='rounded-[1rem] mt-2' src={cat}></img>
+                        </div>
+                        <div className='mt-1 mb-1 flex w-full leading-tight text-sm'>
                             <p>{this.props.postData.markdown}</p>
                         </div>
                 </label>
