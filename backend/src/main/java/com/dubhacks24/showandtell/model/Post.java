@@ -20,8 +20,11 @@ public class Post {
     @Setter(AccessLevel.NONE)
     private String id;
 
+    private String title;
     private String markdown;
     private String author;
     private List<Comment> comments;
+    private int kudos;
+    private List<String> gaveKudos;
 
 }
