@@ -17,7 +17,7 @@ const Navbar = () => {
           <ul className="flex gap-4 ml-12 font-productsans font-bold">
             <li><a href="./landingpage">
               <div className='hover:brightness-90 duration-500 mx-1 my-1 rounded-[1rem] bg-satBlue text-white px-3 py-1 w-fit font-bold'>
-                <p>Join</p>
+                <p>Home</p>
               </div>
             </a></li>
             <li><a href="/">

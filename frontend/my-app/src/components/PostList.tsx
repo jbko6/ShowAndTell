@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { GroupData, PostData } from "../interfaces";
-import { Post } from "./post";
+import { Post } from "./Post";
 
 type PostListProps = {
 
@@ -33,7 +33,7 @@ export class PostList extends Component<PostListProps, PostListState> {
             if (group.posts != null) {
                 for (const post of group.posts) {
                     postListHTML.push(
-                        <Post id={post.id} title={post.title} markdown={post.markdown} author={post.author} comments={post.comments} />
+                        <Post postData={post}/>
                     );
                 }
             };
