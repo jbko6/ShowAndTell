@@ -20,7 +20,7 @@ export type PostData = {
     title: string
     markdown: string
     author: string
-    comments: Array<Comment>
+    comments: Array<CommentData>
 }
 
 export type CommentData = {
