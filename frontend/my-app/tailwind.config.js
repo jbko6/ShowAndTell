@@ -24,7 +24,20 @@ module.exports = {
       satBlue: '#359dcf',
       satRed: '#ea5a60'
     },
-    extend: {},
+    fontFamily: {
+      productsans: ['"Product Sans"'],
+      scout: ['Scout'],
+      scoutcond: ['ScoutCond'],
+      avenir: ['"Avenir Next LT Pro"']
+    },
+    extend: {
+      fontFamily: {
+        productsans: ['"Product Sans"'],
+        scout: ['Scout'],
+        scoutcond: ['ScoutCond'],
+        avenir: ['"Avenir Next LT Pro"']
+      },
+    },
   },
   plugins: [],
 }
