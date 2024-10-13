@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Group } from "../interfaces";
+import { GroupData } from "../interfaces";
 
 type GroupListProps = {
 
-    groupList: Array<Group> | null;
+    groupList: Array<GroupData> | null;
 
 }
 

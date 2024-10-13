@@ -8,7 +8,6 @@ export type UserData = {
     picture: string
 }
 
-<<<<<<< HEAD
 export type GroupData = {
     id: ObjectId,
     categoryName: string,
@@ -28,18 +27,4 @@ export type CommentData = {
     id: ObjectId
     author: string
     content: string
-=======
-export type Group = {
-    id: ObjectId
-    categoryName: string
-    member: Array<ObjectId>
-    posts: Array<Post>
-}
-
-export type Post = {
-    id: ObjectId
-    markdown: string
-    author: ObjectId
-    comments: Array<Comment>
->>>>>>> 9bc4880a6f7c69f1a5aa390eb2e8a1e974e841ed
 }
