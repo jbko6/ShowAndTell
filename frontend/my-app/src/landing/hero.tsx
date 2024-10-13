@@ -15,7 +15,7 @@
                     Be <span className='text-satGreen'>Inspired</span> by<br/>
                     Your <span className='text-satBlue'>Interest</span> Groups
                 </h1>
-                <p className='py-2 text-lg text-gray-600'>
+                <p className='py-2 text-lg text-gray-600 font-semibold'>
                     Hold Accountability for Your Goals
                 </p>
             </div>
