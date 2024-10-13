@@ -33,13 +33,8 @@ const Navbar = () => {
           </ul>
         </div>
 
-<<<<<<< Updated upstream
         <div className='flex'>
           <button className='hover:brightness-90 duration-500 px-6 gap-2 flex justify-between items-center rounded-md bg-transparent'>
-=======
-        <div className='flex justify-end ml-1'>
-          <button className='px-6 gap-2 flex justify-between items-center rounded-md bg-transparent'>
->>>>>>> Stashed changes
             Login
           </button>
           <button className='hover:brightness-90 duration-500 px-8 py-3 rounded-md bg-satGreen text-white font-bold'>
