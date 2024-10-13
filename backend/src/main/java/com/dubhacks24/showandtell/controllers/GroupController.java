@@ -3,13 +3,15 @@ package com.dubhacks24.showandtell.controllers;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,12 +54,33 @@ public class GroupController {
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/groups/{id}/join")
-    ResponseEntity<?> joinGroup(@PathVariable("id") String id, Principal pricipal) throws URISyntaxException {
+    @GetMapping("/groups/{id}/myday")
+    ResponseEntity<?> getMyDay(@PathVariable("id") String id, Principal principal) {
         Optional<Group> optionalGroup = groupRepo.findById(id);
         if (optionalGroup.isPresent()) {
             Group realGroup = optionalGroup.get();
-            realGroup.getMember().add(pricipal.getName());
+            Map<String, Date> postingDays = realGroup.getPostDays();
+            if (postingDays.containsKey(principal.getName())) {
+                return ResponseEntity.ok().body(postingDays.get(principal.getName()));
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/groups/{id}/join")
+    ResponseEntity<?> joinGroup(@PathVariable("id") String id, Principal principal) throws URISyntaxException {
+        Optional<Group> optionalGroup = groupRepo.findById(id);
+        if (optionalGroup.isPresent()) {
+            Group realGroup = optionalGroup.get();
+
+            realGroup.getMember().add(principal.getName());
+
+            // set posting day
+            if (realGroup.getPostDays() == null) {
+                realGroup.setPostDays(new HashMap<String, Date>());
+            }
+            realGroup.getPostDays().put(principal.getName(), new Date(124, 10, 15));
+
             Group result = groupRepo.save(realGroup);
             return ResponseEntity.created(new URI("/api/groups/" + result.getId())).body(result);
         }
@@ -82,6 +105,44 @@ public class GroupController {
         if (group.isPresent()) {
             Group realGroup = group.get();
             realGroup.getPosts().add(post);
+            Group result = groupRepo.save(realGroup);
+            return ResponseEntity.created(new URI("/api/group/" + result.getId())).body(result);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/groups/{id}/posts/{index}")
+    ResponseEntity<?> submitPostKudos(@PathVariable("id") String id, @PathVariable("index") int index, Principal principal) throws URISyntaxException{
+        Optional<Group> group = groupRepo.findById(id);
+        if (group.isPresent()) {
+            Group realGroup = group.get();
+            Post post = realGroup.getPosts().get(index);
+            if (post.getGaveKudos().contains(principal.getName())) {
+                post.setKudos(post.getKudos() - 1);
+                post.getGaveKudos().remove(principal.getName());
+            } else {
+                post.getGaveKudos().add(principal.getName());
+                post.setKudos(post.getKudos() + 1);
+            }
+            Group result = groupRepo.save(realGroup);
+            return ResponseEntity.created(new URI("/api/group/" + result.getId())).body(result);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/groups/{id}/posts{postIndex}/comments/{commentIndex}")
+    ResponseEntity<?> submitCommentKudos(@PathVariable("id") String id, @PathVariable("postIndex") int postIndex, @PathVariable("commentIndex") int commentIndex, Principal principal) throws URISyntaxException{
+        Optional<Group> group = groupRepo.findById(id);
+        if (group.isPresent()) {
+            Group realGroup = group.get();
+            Comment comment = realGroup.getPosts().get(postIndex).getComments().get(commentIndex);
+            if (comment.getGaveKudos().contains(principal.getName())) {
+                comment.setKudos(comment.getKudos() - 1);
+                comment.getGaveKudos().remove(principal.getName());
+            } else {
+                comment.getGaveKudos().add(principal.getName());
+                comment.setKudos(comment.getKudos() + 1);
+            }
             Group result = groupRepo.save(realGroup);
             return ResponseEntity.created(new URI("/api/group/" + result.getId())).body(result);
         }

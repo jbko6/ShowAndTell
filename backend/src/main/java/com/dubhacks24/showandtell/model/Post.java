@@ -2,7 +2,6 @@ package com.dubhacks24.showandtell.model;
 
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 import lombok.AccessLevel;
@@ -20,8 +19,11 @@ public class Post {
     @Setter(AccessLevel.NONE)
     private String id;
 
+    private String title;
     private String markdown;
     private String author;
     private List<Comment> comments;
+    private int kudos;
+    private List<String> gaveKudos;
 
 }

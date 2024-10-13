@@ -12,11 +12,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.dubhacks24.showandtell.repository.UserRepository;
+import com.dubhacks24.showandtell.model.User;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -29,9 +31,11 @@ public class UserController {
     
     private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final ClientRegistration registration;
+    private final UserRepository userRepo;
 
-    public UserController(ClientRegistrationRepository repository) {
+    public UserController(ClientRegistrationRepository repository, UserRepository userRepo) {
         this.registration = repository.findByRegistrationId("okta");
+        this.userRepo = userRepo;
     }
 
     @GetMapping("/user")
@@ -39,7 +43,13 @@ public class UserController {
         if (user == null) {
             return new ResponseEntity<>("", HttpStatus.OK);
         } else {
-            return ResponseEntity.ok().body(user.getAttributes());
+            if (userRepo.findById(user.getName()).isEmpty()) {
+                Map<String, Object> attributes = user.getAttributes();
+                User newUser = new User(user.getName(), (String) attributes.get("name"), (String) attributes.get("email"));
+                userRepo.save(newUser);
+            }
+            User foundUser = userRepo.findById(user.getName()).get();
+            return ResponseEntity.ok().body(Map.of("_id", foundUser.getId(), "name", foundUser.getName(), "email", foundUser.getEmail()));
         }
     }
 

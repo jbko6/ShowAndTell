@@ -1,6 +1,7 @@
 package com.dubhacks24.showandtell.model;
 
-import org.bson.types.ObjectId;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 
 import lombok.AccessLevel;
@@ -20,5 +21,7 @@ public class Comment {
 
     private String content;
     private String author;
+    private int kudos;
+    private List<String> gaveKudos;
 
 }

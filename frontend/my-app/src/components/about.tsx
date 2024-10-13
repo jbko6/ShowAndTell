@@ -9,7 +9,7 @@ export default function About() {
         <Navbar />
         <div className="h-screen w-screen grid grid-cols-3 grid-rows-3 gap-3 justify-items-center">
             <div className="w-full">
-                <a href='/'>
+                {/* <a href='/'>
                     <div className='flex text-3xl font-bold mx-2 my-3'>
                         <svg className="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
@@ -18,7 +18,7 @@ export default function About() {
                         <a className='ml-auto' href='/'>
                     </a>
                     </div>
-                </a>
+                </a> */}
             </div> 
 
             <div className='w-full h-fit grid grid-cols-1 grid-rows-2 justify-items-center'>
@@ -31,7 +31,7 @@ export default function About() {
                                     inspired by projects of all kinds.
                                     <br></br>
                                     <br></br>
-                                    Have you ever had a project you wanted to share? Tired of your posts getting lost in the aether of the internet? Well, look no further! We connect people to a group of 50 others who share your hobbies. From art and writing, to coding and cooking, you can contribute to it all. Your can even get into the nitty gritty of it, categories such as art giving you spaces specific to oil painting or pen and ink if you so choose.
+                                    Have you ever had a project you wanted to share? Tired of your posts getting lost in the aether of the internet? Well, look no further! We connect people to a group of 50 others who share your hobbies. From art and writing, to coding and cooking, you can contribute to it all. You can even get into the nitty gritty of it, categories such as art giving you spaces specific to oil painting or pen and ink if you so choose.
                                     <br></br>
                                     <br></br>
                                     Share your progress on your projects every ten days, you and four others taking up the spotlight for the day. Never again will your works be lost to the masses.
