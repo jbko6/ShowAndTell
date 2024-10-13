@@ -17,38 +17,64 @@ export default function Home() {
 
             {/* Middle Column */}
             <div className="outline w-full justify-center">
-                <div className="w-auto bg-gray-200 rounded-[1rem] mx-2 my-4 px-3 py-2 h-fit outline">
-                    <div className='flex justify-between'>
-                        <p className=''>Title Goes Here</p>
-                        <p className=''>MM/DD/YYYY</p>
-                    </div>
-                    <div className='flex w-full'>
-                        <p>user</p>
-                    </div>
-                    <img src={tmpImg} className="my-2 rounded-[2rem]" alt=""></img>
-                    <div>
-                        <p>Comments</p>
-                        <div className='outline bg-gray-400 h-[1rem]'>
 
+                <label htmlFor='postModal' className='cursor-pointer'>
+                    <div className="w-auto bg-gray-200 rounded-[1rem] mx-2 my-4 px-3 py-2 h-fit outline">
+                        <div className='flex justify-between'>
+                            <p className=''>Title Goes Here</p>
+                            <p className=''>MM/DD/YYYY</p>
+                        </div>
+                        <div className='flex w-full'>
+                            <p>user</p>
+                        </div>
+                        <img src={tmpImg} className="my-2 rounded-[2rem]" alt=""></img>
+                        <div>
+                            <p>Comments</p>
+                            <div className='outline bg-gray-400 h-[1rem]'>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="w-auto bg-gray-200 rounded-[1rem] mx-2 my-4 px-3 py-2 h-fit outline">
-                    <div className='flex justify-between'>
-                        <p className=''>Title Goes Here</p>
-                        <p className=''>MM/DD/YYYY</p>
-                    </div>
-                    <div className='flex w-full'>
-                        <p>user</p>
-                    </div>
-                    <img src={tmpImg} className="my-2 rounded-[2rem]" alt=""></img>
-                    <div>
-                        <p>Comments</p>
-                        <div className='outline bg-gray-400 h-[1rem]'>
+                </label>
+                
+                <input type='checkbox' id='postModal' className='peer fixed appearance-none opacity-0' />
 
-                        </div>
-                    </div>
-                </div>
+                <label htmlFor='postModal' className='
+                    pointer-events-none invisible fixed inset-0 flex cursor-pointer items-start justify-center overflow-hidden backdrop-blur-md bg-opacity-20 bg-white 
+                    overscroll-contain opacity-0 transition-all duration-300 ease-in-out 
+                    peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100'>
+                    <label className='max-h-lg bg-white h-fit max-w-lg w-auto mx-2 my-[12rem] px-3 py-2 rounded-[1rem]' htmlFor=''>
+                            <div className='flex justify-between'>
+                                <p className=''>Title Goes Here</p>
+                                <p className=''>MM/DD/YYYY</p>
+                            </div>
+                            <div className='flex w-full'>
+                                <p>user</p>
+                            </div>
+                            <img src={tmpImg} className="my-2 rounded-[2rem]" alt=""></img>
+                            <div>
+                                <p>Description</p>
+                                <div className='outline bg-gray-400 h-fit'>
+                                    <p>pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden backdrop-blur-md bg-opacity-20 bg-white 
+                    overscroll-contain opacity-0 transition-all duration-200 ease-in-out 
+                    peer-checked:pointer-events-auto</p>
+                                </div>
+                            </div>
+                    </label>
+                    <label className='max-h-lg bg-white h-fit max-w-lg w-auto mx-2 my-[12rem] px-3 py-2 rounded-[1rem]' htmlFor=''>
+                            <div className='flex justify-between'>
+                                <p className=''>Comments</p>
+                                <p className=''># of Comments</p>
+                            </div>
+                            <div>
+                                <div className='outline bg-gray-400 h-fit'>
+                                    <p>pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden backdrop-blur-md bg-opacity-20 bg-white 
+                    overscroll-contain opacity-0 transition-all duration-200 ease-in-out 
+                    peer-checked:pointer-events-auto</p>
+                                </div>
+                            </div>
+                    </label>
+                </label>
             </div>
 
             {/* Right Column */}
@@ -79,29 +105,6 @@ export default function Home() {
                     </svg>
                     <p>Group 2</p>
                 </div>
-
-
-
-                {/* PAIN BELOW */}
-                {/* <div>
-                    <label htmlFor="modal" className='cursor-pointer'>Test</label>
-                </div>
-
-                <input type="checkbox" id="modal" className="peer appearance-none"/>
-
-                <label htmlFor="modal" className='invisible opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100'>
-                    <label>
-                    <div className="absolute transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                        <div className="bg-gray-200 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                        <div className="sm:flex sm:items-start">
-                            <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                            <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">Deactivate account</h3>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </label>
-                </label> */}
             </div>
         </div>
     )
