@@ -29,10 +29,10 @@ const Navbar = () => {
         </div>
 
         <div className='flex'>
-          <button className='px-6 gap-2 flex justify-between items-center rounded-md bg-transparent'>
+          <button className='hover:brightness-90 duration-500 px-6 gap-2 flex justify-between items-center rounded-md bg-transparent'>
             Login
           </button>
-          <button className='px-8 py-3 rounded-md bg-satGreen text-white font-bold'>
+          <button className='hover:brightness-90 duration-500 px-8 py-3 rounded-md bg-satGreen text-white font-bold'>
             Sign Up
           </button>
         </div>

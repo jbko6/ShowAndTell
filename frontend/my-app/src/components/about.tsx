@@ -31,7 +31,7 @@ export default function About() {
                                     inspired by projects of all kinds.
                                     <br></br>
                                     <br></br>
-                                    Have you ever had a project you wanted to share? Tired of your posts getting lost in the aether of the internet? Well, look no further! We connect people to a group of 50 others who share your hobbies. From art and writing, to coding and cooking, you can contribute to it all. Your can even get into the nitty gritty of it, categories such as art giving you spaces specific to oil painting or pen and ink if you so choose.
+                                    Have you ever had a project you wanted to share? Tired of your posts getting lost in the aether of the internet? Well, look no further! We connect people to a group of 50 others who share your hobbies. From art and writing, to coding and cooking, you can contribute to it all. You can even get into the nitty gritty of it, categories such as art giving you spaces specific to oil painting or pen and ink if you so choose.
                                     <br></br>
                                     <br></br>
                                     Share your progress on your projects every ten days, you and four others taking up the spotlight for the day. Never again will your works be lost to the masses.
