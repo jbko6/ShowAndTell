@@ -18,10 +18,10 @@ public class Post {
     
     @Id
     @Setter(AccessLevel.NONE)
-    private ObjectId id;
+    private String id;
 
     private String markdown;
-    private ObjectId author;
+    private String author;
     private List<Comment> comments;
 
 }

@@ -16,9 +16,9 @@ public class Comment {
     
     @Id
     @Setter(AccessLevel.NONE)
-    private ObjectId id;
+    private String id;
 
     private String content;
-    private ObjectId author;
+    private String author;
 
 }

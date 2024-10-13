@@ -16,10 +16,10 @@ public class Group {
     
     @Id
     @Setter(AccessLevel.NONE)
-    private ObjectId id;
+    private String id;
 
-    private String category_name;
-    private List<ObjectId> member;
+    private String categoryName;
+    private List<String> member;
     private List<Post> posts;
 
 
