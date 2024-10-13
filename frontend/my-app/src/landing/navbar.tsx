@@ -1,24 +1,25 @@
-import ShowAndTell_Logo from '../img/ShowAndTell_Logo.png';
-import React from 'react'
+
+import STlogo from '../img/STlogo.png';
+import React from 'react';
 
 const Navbar = () => {
   return (
     <div className='w-full h-[80px] bg-white border-b'>
       <div className='max-w-[1480px] m-auto w-full h-full flex justify-between items-center'>
 
-        <img src={ShowAndTell_Logo} className="h-[100px]"/>
+        <img src={STlogo} className="px-4 h-[70px]"/>
         <div className="flex items-center">
-          <ul className="flex gap-4">
+          <ul className="flex gap-5">
             <li>Home</li>
-            <li>About</li>
+            <li><a href="./about">About</a></li>
             <li>Team</li>
             <li>Pricing</li>
           </ul>
         </div>
-        
+
         <div className='flex'>
-          <button className=''>Login</button>
-          <button className='px-8 py-3 rounded-md bg-[#20B486]'>Sign Up</button>
+          <button className='flex justify-between items-center bg-transparent px-6 gap-2'>Login</button>
+          <button className='m-6 px-8 py-3 rounded-md bg-satGreen text-white font-bold'>Sign Up</button>
         </div>
 
       </div>
