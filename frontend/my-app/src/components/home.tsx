@@ -5,6 +5,7 @@ import tmpImg from '../img/beans.jpg';
 import Post from './post';
 // import './App.css';
 import { GroupList } from './GroupList';
+import { PostList } from './PostList';
 
 export default function Home() {
     const [authenticated, setAuthenticated] = useState(false);
@@ -82,12 +83,8 @@ export default function Home() {
             {/* Middle Column */}
             <div className="w-full justify-center">
 
-                {/* The post as seen on the FEED */}
-                {group ? group[0].posts.map(post => {
-                    return (<div>
-                        <Post id={post.id} title={post.title} markdown={post.markdown} author={post.author} comments={post.comments}></Post>
-                    </div>)
-                }) : <></>}
+                {/* Displays posts from all groups */}
+                <PostList groupList={group} />
             </div>
 
             {/* Right Column */}
