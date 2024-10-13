@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { UserData, GroupData } from '../interfaces'
 import tmpImg from '../img/beans.jpg';
-import { User } from '../interfaces'
+import Post from './post';
 // import './App.css';
+import { GroupList } from './GroupList';
 
 export default function Home() {
     const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<User|null>(null);
+    const [user, setUser] = useState<UserData|null>(null);
+    const [groups, setGroups] = useState<Array<GroupData>|null>(null)
     const [cookies] = useCookies(['XSRF-TOKEN']);
+    const [group, setGroup] = useState<Array<GroupData>|null>(null);
 
     useEffect(() => {
         setLoading(true);
@@ -30,7 +34,21 @@ export default function Home() {
                     setLoading(false);
                 }
             });
-    }, [setAuthenticated, setLoading, setUser]);
+
+        setLoading(true);
+        fetch('/api/groups')
+            .then(response => response.text())
+            .then(body => {
+                if (body == '') {
+                    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                } else {
+                    console.log(JSON.parse(body));
+                    setGroup(JSON.parse(body));
+                    setLoading(false);
+                }
+
+            });
+    }, [setAuthenticated, setLoading, setUser, setGroup]);
 
     const logout = () => {
         fetch('/api/logout', {
@@ -66,35 +84,9 @@ export default function Home() {
             <div className="w-full justify-center">
 
                 {/* The post as seen on the FEED */}
-                <label htmlFor='postModal' className='cursor-pointer'>
-                    <div className="w-auto bg-white rounded-[0.5rem] mx-2 my-4 px-3 pt-2 pb-3 h-fit outline-2 outline-satBlue outline">
-                        <div className='flex justify-between'>
-                            <p className='font-productsans font-bold'>Title Goes Here</p>
-                            <p className='text-xs text-gray-400'>MM/DD/YYYY</p>
-                        </div>
-                        <div className='flex w-full text-sm -mt-2 text-gray-400'>
-                            <p>user</p>
-                        </div>
-                        <div className='mt-1 flex w-full leading-tight text-sm'>
-                            <p>Description asdfjlsakfdlkfdsajlksa lkjsa lksaj flkjsa lkjsafd lkjfdsa salkdjdsalkjf lsa klsa slka llkas as sa s </p>
-                        </div>
-                        <img src={tmpImg} className="my-2 rounded-[0.5rem]" alt=""></img>
-                        <div className='flex justify-between items-center'>
-                            <div className='flex items-center'>
-                                <svg className='text-yellow-500' xmlns="http://www.w3.org/2000/svg" width='20' height='20' viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/>
-                                    <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
-                                </svg>
-                                <p className='ml-2 text-xs font-bold '>14</p>
-                            </div>
-                            <div className='flex items-center'>
-                                <p className='mr-2 text-xs font-bold '>123</p>
-                                <svg className='text-satBlue' xmlns="http://www.w3.org/2000/svg" width='20' height='20' viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </label>
+                {groups ? groups[0].posts.map(post => {
+                    return <Post id={post.id} title={post.title} markdown={post.markdown} author={post.author} comments={post.comments}></Post>
+                }) : <></>}
                 
                 <input type='checkbox' id='postModal' className='peer fixed appearance-none opacity-0' />
 
@@ -174,12 +166,12 @@ export default function Home() {
                     <a href='/404'>
                         <div className='bg-white items-center h-fit flex'>
                             <div className='w-fit mr-2 self-start'>
-                                {user ? <div><img src={user.picture}/></div> :
+                                {user ? <div><img className='rounded-[2rem] h-11 w-11' src={user.picture}/></div> :
                                 <svg className='text-gray-500' xmlns="http://www.w3.org/2000/svg" width='42' height='42' viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/><circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/>
                                 </svg>}
                             </div>
-                            <div className=''>
+                            <div className='mb-1.5'>
                                 <p className='text-xl'>{user ? user.name : ""}</p>
                             </div>
                         </div>
@@ -191,7 +183,7 @@ export default function Home() {
                     <label> + Add Groups</label>
                 </div>
 
-                <div className='flex justify-start ml-[8rem] mr-[2rem] mb-[1rem]'>
+                {/* <div className='flex justify-start ml-[8rem] mr-[2rem] mb-[1rem]'>
                     <a href='/group'>
                         <div className='bg-white items-center h-fit flex'>
                             <div className='w-fit mr-2 self-start'>
@@ -218,7 +210,8 @@ export default function Home() {
                             </div>
                         </div>
                     </a>
-                </div>
+                </div> */}
+                <GroupList groupList={group} />
             </div>
         </div>
     )
