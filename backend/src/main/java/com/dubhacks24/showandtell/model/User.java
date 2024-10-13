@@ -18,8 +18,8 @@ public class User {
     
     @Id
     @Setter(AccessLevel.NONE)
-    private ObjectId id;
-    
+    private String id;
+
     private String name;
     private String email;
 

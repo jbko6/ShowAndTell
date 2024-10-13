@@ -1,8 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import tmpImg from '../img/beans.jpg';
+import { User } from '../interfaces'
 // import './App.css';
 
 export default function Home() {
+    const [authenticated, setAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState<User|null>(null);
+    const [cookies] = useCookies(['XSRF-TOKEN']);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch('/api/user', {credentials: 'include'})
+            .then(response => response.text())
+            .then(body => {
+                if (body == '') {
+                    setAuthenticated(false);
+                    let port = (window.location.port ? ':' + window.location.port : '');
+                    if (port === ':3000') {
+                        port = ':8080';
+                    }
+                    // redirect to a protected URL to trigger authentication
+                    window.location.href = `//${window.location.hostname}${port}/api/private`;
+                } else {
+                    console.log(body)
+                    setUser(JSON.parse(body));
+                    setAuthenticated(true);
+                    setLoading(false);
+                }
+            });
+    }, [setAuthenticated, setLoading, setUser]);
+
+    const logout = () => {
+        fetch('/api/logout', {
+            method: 'POST', credentials: 'include',
+            headers: { 'X-XSRF-TOKEN': cookies['XSRF-TOKEN'] }
+        })
+            .then(res => res.json())
+            .then(response => {
+            window.location.href = `${response.logoutUrl}?id_token_hint=${response.idToken}`
+                + `&post_logout_redirect_uri=${window.location.origin}`;
+            });
+    }
+
+    if (loading) {
+        return <p>Loading...</p>
+    }
+
     return(
         <div className="h-screen w-screen grid grid-cols-3 grid-rows-1 gap-3 justify-items-center">
             {/* Left Column */}
@@ -129,12 +174,13 @@ export default function Home() {
                     <a href='/404'>
                         <div className='bg-white items-center h-fit flex'>
                             <div className='w-fit mr-2 self-start'>
+                                {user ? <div><img src={user.picture}/></div> :
                                 <svg className='text-gray-500' xmlns="http://www.w3.org/2000/svg" width='42' height='42' viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M5.52 19c.64-2.2 1.84-3 3.22-3h6.52c1.38 0 2.58.8 3.22 3"/><circle cx="12" cy="10" r="3"/><circle cx="12" cy="12" r="10"/>
-                                </svg>
+                                </svg>}
                             </div>
                             <div className=''>
-                                <p className='text-xl'>Aiden</p>
+                                <p className='text-xl'>{user ? user.name : ""}</p>
                             </div>
                         </div>
                     </a>

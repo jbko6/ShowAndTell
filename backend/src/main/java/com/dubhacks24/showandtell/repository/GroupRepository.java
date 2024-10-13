@@ -3,19 +3,19 @@ package com.dubhacks24.showandtell.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.lang.NonNull;
 
-import com.dubhacks24.showandtell.model.Category;
 import com.dubhacks24.showandtell.model.Group;
 
-public interface GroupRepository extends MongoRepository<Group, ObjectId> {
+public interface GroupRepository extends MongoRepository<Group, String> {
     
-    List<Group> findAllByMember(ObjectId id);
+    List<Group> findAllByMember(String id);
 
-    Optional<Group> findByCategory(Category category);
+    Optional<Group> findByCategoryName(String category);
 
-    @NonNull Optional<Group> findById(@NonNull ObjectId id);
+    @NonNull Optional<Group> findById(@NonNull String id);
+
+    void deleteById(String id);
     
 }

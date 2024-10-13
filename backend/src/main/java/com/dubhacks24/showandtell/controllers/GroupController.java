@@ -5,11 +5,11 @@ import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.Optional;
 
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,18 +42,42 @@ public class GroupController {
 
     @GetMapping("/groups")
     Iterable<Group> Groups(Principal principal) {
-        return groupRepo.findAllByMember(new ObjectId(principal.getName()));
+        return groupRepo.findAllByMember(principal.getName());
     }
 
     @GetMapping("/groups/{id}")
-    ResponseEntity<?> getGroup(@PathVariable ObjectId id) {
+    ResponseEntity<?> getGroup(@PathVariable("id") String id) {
         Optional<Group> group = groupRepo.findById(id);
         return group.map(response -> ResponseEntity.ok().body(response))
                     .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PostMapping("/groups/{id}/join")
+    ResponseEntity<?> joinGroup(@PathVariable("id") String id, Principal pricipal) throws URISyntaxException {
+        Optional<Group> optionalGroup = groupRepo.findById(id);
+        if (optionalGroup.isPresent()) {
+            Group realGroup = optionalGroup.get();
+            realGroup.getMember().add(pricipal.getName());
+            Group result = groupRepo.save(realGroup);
+            return ResponseEntity.created(new URI("/api/groups/" + result.getId())).body(result);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/groups/{id}/leave")
+    ResponseEntity<?> leaveGroup(@PathVariable("id") String id, Principal principal) throws URISyntaxException {
+        Optional<Group> optionalGroup = groupRepo.findById(id);
+        if (optionalGroup.isPresent()) {
+            Group realGroup = optionalGroup.get();
+            realGroup.getMember().remove(principal.getName());
+            Group result = groupRepo.save(realGroup);
+            return ResponseEntity.created(new URI("/api/groups/" + result.getId())).body(result);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("/groups/{id}/posts")
-    ResponseEntity<?> submitPost(@PathVariable ObjectId id, @Valid @RequestBody Post post) throws URISyntaxException {
+    ResponseEntity<?> submitPost(@PathVariable("id") String id, @Valid @RequestBody Post post) throws URISyntaxException {
         Optional<Group> group = groupRepo.findById(id);
         if (group.isPresent()) {
             Group realGroup = group.get();
@@ -65,7 +89,7 @@ public class GroupController {
     }
 
     @PostMapping("/groups/{id}/posts/{index}/comments")
-    ResponseEntity<?> submitComment(@PathVariable ObjectId id, @PathVariable int index, @Valid @RequestBody Comment comment) throws URISyntaxException {
+    ResponseEntity<?> submitComment(@PathVariable("id") String id, @PathVariable("index") int index, @Valid @RequestBody Comment comment) throws URISyntaxException {
         Optional<Group> group = groupRepo.findById(id);
         if (group.isPresent()) {
             Group realGroup = group.get();
@@ -92,7 +116,7 @@ public class GroupController {
     }
 
     @DeleteMapping("/groups/{id}")
-    ResponseEntity<?> deleteGroup(@PathVariable ObjectId id) {
+    ResponseEntity<?> deleteGroup(@PathVariable String id) {
         log.info("Request to delete Group: {}", id);
         groupRepo.deleteById(id);
         return ResponseEntity.ok().build();
