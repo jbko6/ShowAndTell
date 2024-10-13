@@ -2,7 +2,6 @@ package com.dubhacks24.showandtell.model;
 
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
 import lombok.AccessLevel;

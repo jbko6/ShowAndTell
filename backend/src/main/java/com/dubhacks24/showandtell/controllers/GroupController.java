@@ -93,11 +93,11 @@ public class GroupController {
         if (group.isPresent()) {
             Group realGroup = group.get();
             Post post = realGroup.getPosts().get(index);
-            if (post.getGaveKudos().contains(principal.toString())) {
+            if (post.getGaveKudos().contains(principal.getName())) {
                 post.setKudos(post.getKudos() - 1);
-                post.getGaveKudos().remove(principal.toString());
+                post.getGaveKudos().remove(principal.getName());
             } else {
-                post.getGaveKudos().add(principal.toString());
+                post.getGaveKudos().add(principal.getName());
                 post.setKudos(post.getKudos() + 1);
             }
             Group result = groupRepo.save(realGroup);
@@ -112,11 +112,11 @@ public class GroupController {
         if (group.isPresent()) {
             Group realGroup = group.get();
             Comment comment = realGroup.getPosts().get(postIndex).getComments().get(commentIndex);
-            if (comment.getGaveKudos().contains(principal.toString())) {
+            if (comment.getGaveKudos().contains(principal.getName())) {
                 comment.setKudos(comment.getKudos() - 1);
-                comment.getGaveKudos().remove(principal.toString());
+                comment.getGaveKudos().remove(principal.getName());
             } else {
-                comment.getGaveKudos().add(principal.toString());
+                comment.getGaveKudos().add(principal.getName());
                 comment.setKudos(comment.getKudos() + 1);
             }
             Group result = groupRepo.save(realGroup);
