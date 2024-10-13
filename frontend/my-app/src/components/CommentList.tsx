@@ -23,7 +23,7 @@ export class CommentList extends Component<CommentListProps, GroupListState> {
 
         if (this.props.commentList == null) {
             commentListHTML.push(
-                <div>NO COMMENTS!</div>
+                <div className="ml-1 mb-2 font-productsans">No one's commented yet! You could be the first...</div>
             );
             return (<div>{commentListHTML}</div>);
         }
