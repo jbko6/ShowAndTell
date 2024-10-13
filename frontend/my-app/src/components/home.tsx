@@ -1,8 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import tmpImg from '../img/beans.jpg';
 // import './App.css';
 
 export default function Home() {
+    const [authenticated, setAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState(undefined);
+    const [cookies] = useCookies(['XSRF-TOKEN']);
+
+    useEffect(() => {
+        setLoading(true);
+        fetch('/api/user', {credentials: 'include'})
+            .then(response => response.text())
+            .then(body => {
+                if (body == '') {
+                    setAuthenticated(false);
+                    let port = (window.location.port ? ':' + window.location.port : '');
+                    if (port === ':3000') {
+                        port = ':8080';
+                    }
+                    // redirect to a protected URL to trigger authentication
+                    window.location.href = `//${window.location.hostname}${port}/api/private`;
+                } else {
+                    console.log(body)
+                    setUser(JSON.parse(body));
+                    setAuthenticated(true);
+                }
+            });
+    }, [setAuthenticated, setLoading, setUser]);
+
+    const logout = () => {
+        fetch('/api/logout', {
+            method: 'POST', credentials: 'include',
+            headers: { 'X-XSRF-TOKEN': cookies['XSRF-TOKEN'] }
+        })
+            .then(res => res.json())
+            .then(response => {
+            window.location.href = `${response.logoutUrl}?id_token_hint=${response.idToken}`
+                + `&post_logout_redirect_uri=${window.location.origin}`;
+            });
+    }
+
     return(
         <div className="h-screen w-screen grid grid-cols-3 grid-rows-1 gap-3 justify-items-center outline">
             {/* Left Column */}
